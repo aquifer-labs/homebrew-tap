@@ -1,19 +1,21 @@
 class Artesian < Formula
   desc "Memory control plane for AI agent loops"
   homepage "https://github.com/aquifer-labs/artesian"
-  url "https://github.com/aquifer-labs/artesian/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "b80cc64dd6b34d60765dc105f4dbf789ce0a3e4ff6475d433ccee75ddcb7ffbf"
+  version "0.1.1"
   license "Apache-2.0"
-  head "https://github.com/aquifer-labs/artesian.git", branch: "main"
 
-  depends_on "rust" => :build
+  # Pre-built, dependency-free binaries: they link only OS system libraries (rustls, SQLite, and
+  # the ONNX runtime are statically bundled), so there is no Rust toolchain to build and nothing
+  # else to install. x86_64 macOS and Linux are produced by the release workflow.
+  on_macos do
+    on_arm do
+      url "https://github.com/aquifer-labs/artesian/releases/download/v0.1.1/artesian-0.1.1-aarch64-apple-darwin.tar.gz"
+      sha256 "3ea978e416896ac3b8ba38f2976e17d044a021e1847bc7b0753a08e64b6eddf4"
+    end
+  end
 
   def install
-    system "cargo", "install", "--locked", "--features", "qdrant,llm",
-           "--path", "crates/artesian-cli", "--root", prefix
-    # artesian-mcp also gets the http transport for shared/networked memory.
-    system "cargo", "install", "--locked", "--features", "qdrant,llm,http",
-           "--path", "crates/artesian-mcp", "--root", prefix
+    bin.install "artesian", "artesian-mcp", "artesiand"
   end
 
   test do
