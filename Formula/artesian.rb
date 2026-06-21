@@ -9,10 +9,10 @@ class Artesian < Formula
   depends_on "rust" => :build
 
   def install
-    features = "qdrant,llm"
-    system "cargo", "install", "--locked", "--features", features,
+    system "cargo", "install", "--locked", "--features", "qdrant,llm",
            "--path", "crates/artesian-cli", "--root", prefix
-    system "cargo", "install", "--locked", "--features", features,
+    # artesian-mcp also gets the http transport for shared/networked memory.
+    system "cargo", "install", "--locked", "--features", "qdrant,llm,http",
            "--path", "crates/artesian-mcp", "--root", prefix
   end
 
