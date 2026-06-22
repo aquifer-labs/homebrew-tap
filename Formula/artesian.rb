@@ -1,21 +1,30 @@
 class Artesian < Formula
   desc "Memory control plane for AI agent loops"
   homepage "https://github.com/aquifer-labs/artesian"
-  version "0.1.1"
+  version "0.1.2"
   license "Apache-2.0"
 
-  # Pre-built, dependency-free binaries: they link only OS system libraries (rustls, SQLite, and
-  # the ONNX runtime are statically bundled), so there is no Rust toolchain to build and nothing
-  # else to install. x86_64 macOS and Linux are produced by the release workflow.
+  # One dependency-free multi-call binary (it links only OS system libraries; rustls, SQLite, and
+  # the ONNX runtime are statically bundled). Installed once and symlinked, so the CLI, MCP server,
+  # and daemon share a single copy instead of three. No Rust toolchain, no build.
   on_macos do
     on_arm do
-      url "https://github.com/aquifer-labs/artesian/releases/download/v0.1.1/artesian-0.1.1-aarch64-apple-darwin.tar.gz"
-      sha256 "3ea978e416896ac3b8ba38f2976e17d044a021e1847bc7b0753a08e64b6eddf4"
+      url "https://github.com/aquifer-labs/artesian/releases/download/v0.1.2/artesian-0.1.2-aarch64-apple-darwin.tar.gz"
+      sha256 "0bca7464c18e4f25a70a172aafa1586a0ed12dac6308dac03fa866a8a66bbf81"
+    end
+  end
+  on_linux do
+    on_intel do
+      url "https://github.com/aquifer-labs/artesian/releases/download/v0.1.2/artesian-0.1.2-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "f66ff28e07cefb4e31f8ab753c0ffb9231900133717748adff68c4d63588ed1f"
     end
   end
 
   def install
-    bin.install "artesian", "artesian-mcp", "artesiand"
+    bin.install "artesian"
+    # The MCP server and the daemon are the same binary, dispatched by invocation name.
+    bin.install_symlink "artesian" => "artesian-mcp"
+    bin.install_symlink "artesian" => "artesiand"
   end
 
   test do
