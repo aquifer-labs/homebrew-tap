@@ -1,7 +1,7 @@
 class Artesian < Formula
   desc "Memory control plane for AI agent loops"
   homepage "https://github.com/aquifer-labs/artesian"
-  version "0.5.8"
+  version "0.5.9"
   license "Apache-2.0"
 
   # One dependency-free multi-call binary (it links only OS system libraries; rustls, SQLite, and
@@ -9,14 +9,14 @@ class Artesian < Formula
   # and daemon share a single copy instead of three. No Rust toolchain, no build.
   on_macos do
     on_arm do
-      url "https://github.com/aquifer-labs/artesian/releases/download/v0.5.8/artesian-0.5.8-aarch64-apple-darwin.tar.gz"
-      sha256 "752533eaaa6baedd595a695d30b10d8f19e9cf4c325e8dbb9e9a8557af12764d"
+      url "https://github.com/aquifer-labs/artesian/releases/download/v0.5.9/artesian-0.5.9-aarch64-apple-darwin.tar.gz"
+      sha256 "c143e260056d8413acad5b42de258b72771627bac1463c045c4b0a5afbbcb443"
     end
   end
   on_linux do
     on_intel do
-      url "https://github.com/aquifer-labs/artesian/releases/download/v0.5.8/artesian-0.5.8-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "d7e97afbfaaabe5502e56ee90555998f77b18965d08f58d08ed43400293d1754"
+      url "https://github.com/aquifer-labs/artesian/releases/download/v0.5.9/artesian-0.5.9-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "5e16d7eb2469b53db488e23bc61b590bcb679ee29f26867ec8f336729dab17ec"
     end
   end
 
